@@ -13,5 +13,25 @@ namespace ServicoFornecedor.Services
         public void InserirFornecedor(Fornecedor fornecedor) { 
             _fornecedorRepository.InserirFornecedor(fornecedor);
         }
+        public Fornecedor FindById(int id)
+        {
+            return _fornecedorRepository.FindById(id);
+
+        }
+        public List<Fornecedor> FindAll()
+        {
+            return _fornecedorRepository.FindAll();
+        }
+        public bool DeleteById(int id)
+        {
+            var item = _fornecedorRepository.FindById(id);
+            if (item == null)
+            {
+                return false;
+            }
+            _fornecedorRepository.DeleteById(item);
+            return true;
+        }
+
     }
 }

@@ -48,5 +48,62 @@ namespace ServicoFornecedor.Controllers
                 return StatusCode(StatusCodes.Status400BadRequest, e.Message);
             }
         }
+
+        [HttpGet]
+        public IActionResult BuscarTodos()
+        {
+            try
+            {
+                var fornecedor = _fornecedorService.FindAll();
+
+                if (fornecedor == null)
+                {
+                    return NotFound(new { Message = $"Nenhum fornecedor cadastrado ainda" });
+                }
+
+                return Ok(fornecedor);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, e.Message);
+            }
+        }
+        [HttpGet("{id:int}")]
+        public IActionResult BuscarPorId([FromRoute] int id)
+        {
+            try
+            {
+                var item = _fornecedorService.FindById(id);
+                if (item == null)
+                {
+                    return NotFound(new { Message = $"Fornecedor com ID {id} não encontrado." });
+                }
+                return Ok(item);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, e.Message);
+            }
+        }
+
+        [HttpDelete("{id:int}")]
+        public IActionResult DeletarPorId([FromRoute] int id)
+        {
+            try
+            {
+                var check = _fornecedorService.DeleteById(id);
+                if (check == false)
+                {
+                    return NotFound(new { Message = $"Houve problema ao deletar o fornecedor" });
+                }
+
+                return NoContent();
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+            }
+        }
+
     }
 }

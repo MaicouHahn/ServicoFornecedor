@@ -15,5 +15,22 @@ namespace ServicoFornecedor.Repositorio
             _dataContext.Add(fornecedor);
             _dataContext.SaveChanges();
         }
+        public Fornecedor FindById(int id)
+        {
+            return _dataContext.Find<Fornecedor>(id);
+        }
+
+        public List<Fornecedor> FindAll()
+        {
+            return _dataContext.Set<Fornecedor>().ToList();
+        }
+
+        public void DeleteById(Fornecedor item)
+        {
+            _dataContext.Remove(item);
+            _dataContext.SaveChanges();
+        }
+
+
     }
 }
