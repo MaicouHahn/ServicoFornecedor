@@ -25,9 +25,14 @@ namespace ServicoFornecedor.Repositorio
             return _dataContext.Set<Fornecedor>().ToList();
         }
 
-        public void DeleteById(Fornecedor item)
+        public void DeleteById(Fornecedor fornecedor)
         {
-            _dataContext.Remove(item);
+            _dataContext.Remove(fornecedor);
+            _dataContext.SaveChanges();
+        }
+        public void UpdateById(Fornecedor fornecedor)
+        {
+            _dataContext.Update(fornecedor);
             _dataContext.SaveChanges();
         }
 

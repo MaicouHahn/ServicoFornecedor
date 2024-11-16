@@ -73,12 +73,12 @@ namespace ServicoFornecedor.Controllers
         {
             try
             {
-                var item = _fornecedorService.FindById(id);
-                if (item == null)
+                var fornecedor = _fornecedorService.FindById(id);
+                if (fornecedor == null)
                 {
                     return NotFound(new { Message = $"Fornecedor com ID {id} não encontrado." });
                 }
-                return Ok(item);
+                return Ok(fornecedor);
             }
             catch (Exception e)
             {
@@ -105,5 +105,23 @@ namespace ServicoFornecedor.Controllers
             }
         }
 
+        [HttpPut("{id:int}")]
+        public IActionResult AtualizarFornecedor([FromRoute] int id, [FromBody] Fornecedor fornecedor)
+        {
+            try
+            {
+                var check = _fornecedorService.UpdateById(id, fornecedor);
+                if (check == false)
+                {
+                    return NotFound(new { Message = $"Houve problema ao Editar o Fornecedor" });
+                }
+
+                return NoContent();
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+            }
+        }
     }
 }

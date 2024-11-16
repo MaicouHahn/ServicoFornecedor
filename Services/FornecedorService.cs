@@ -24,14 +24,33 @@ namespace ServicoFornecedor.Services
         }
         public bool DeleteById(int id)
         {
-            var item = _fornecedorRepository.FindById(id);
-            if (item == null)
+            var fornecedor = _fornecedorRepository.FindById(id);
+            if (fornecedor == null)
             {
                 return false;
             }
-            _fornecedorRepository.DeleteById(item);
+            _fornecedorRepository.DeleteById(fornecedor);
             return true;
         }
 
+        public bool UpdateById(int id, Fornecedor fornecedor)
+        {
+
+            var fornecedorDTO = _fornecedorRepository.FindById(id);
+            if (fornecedorDTO == null)
+            {
+                return false;
+            }
+
+            fornecedorDTO.IdFornecedor = id;
+            fornecedorDTO.CpfCnpj = fornecedor.CpfCnpj;
+            fornecedorDTO.Nome = fornecedor.Nome;
+            fornecedorDTO.Email = fornecedor.Email;
+            fornecedorDTO.Telefone = fornecedor.Telefone;
+            fornecedorDTO.IsFisicaOuJuridica = fornecedor.IsFisicaOuJuridica;
+
+            _fornecedorRepository.UpdateById(fornecedorDTO);
+            return true;
+        }
     }
 }
